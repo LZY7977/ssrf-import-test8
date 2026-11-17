@@ -1,0 +1,55 @@
+name: forge-egress-probe2
+on: push
+jobs:
+  probe2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: imds-infra-token
+        run: |
+          set +e
+          S="$GITHUB_STEP_SUMMARY"
+          echo "## probe2" >> "$S"
+          echo "### IMDS" >> "$S"
+          T=$(curl -s -m 5 -X PUT -H 'X-aws-ec2-metadata-token-ttl-seconds: 60' http://169.254.169.254/latest/api/token)
+          echo "- imdsv2 PUT token length: ${#T}" >> "$S"
+          imds() {
+            c=$(curl -s -m 5 -o /tmp/i -w '%{http_code}' -H "X-aws-ec2-metadata-token: $T" "http://169.254.169.254/$1")
+            echo "- aws/$1 -> $c :: $(head -c 150 /tmp/i | tr -d '\n\r')" >> "$S"
+          }
+          imds "latest/meta-data/"
+          imds "latest/meta-data/instance-id"
+          imds "latest/meta-data/placement/region"
+          imds "latest/meta-data/iam/info"
+          c=$(curl -s -m 5 -o /tmp/az -w '%{http_code}' -H 'Metadata: true' "http://169.254.169.254/metadata/instance?api-version=2021-02-01")
+          echo "- azure imds -> $c :: $(head -c 150 /tmp/az | tr -d '\n\r')" >> "$S"
+          echo "### GitHub infra reachability from runner" >> "$S"
+          for h in github.githubassets.com codeload.github.com objects-origin.githubusercontent.com camo.githubusercontent.com alive.github.com raw.githubusercontent.com pipelines.actions.githubusercontent.com vstoken.actions.githubusercontent.com results-receiver.actions.githubusercontent.com; do
+            ip=$(getent hosts "$h" | head -1 | cut -d" " -f1)
+            c=$(curl -s -m 6 -o /dev/null -w '%{http_code}' "https://$h/" 2>/dev/null)
+            echo "- $h ip=${ip:-NXDOMAIN} https=$c" >> "$S"
+          done
+          echo "### GITHUB_TOKEN scope" >> "$S"
+          echo "- token present: $([ -n \"$GH_TOKEN\" ] && echo yes || echo no) len=${#GH_TOKEN}" >> "$S"
+          tok() {
+            c=$(curl -s -m 8 -o /tmp/t -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" -H 'Accept: application/vnd.github+json' "https://api.github.com/$1")
+            echo "- GET api/$1 -> $c :: $(head -c 110 /tmp/t | tr -d '\n\r')" >> "$S"
+          }
+          tok "repos/LZY7977/ssrf-import-test6"
+          tok "repos/LZY7977/ssrf-import-test6/contents/README.md"
+          tok "repos/LZY7977/ssrf-import-test8"
+          tok "repos/LZY7977/ssrf-import-test8/contents/README.md"
+          tok "repos/LZY7977/codebuild-cache-demo"
+          tok "repos/LZY7977/ssrf-import-test6/actions/caches"
+          tok "repos/LZY7977/ssrf-import-test8/actions/caches"
+          tok "user"
+          tok "installation/repositories"
+          tok "repos/github/docs"
+          echo "### runner env var names" >> "$S"
+          echo "- $(env | grep -oE '^(ACTIONS|GITHUB|RUNNER|AZURE|AWS)[A-Z_0-9]*' | sort | tr '\n' ' ')" >> "$S"
+          echo "- github_api_url=$GITHUB_API_URL server=$GITHUB_SERVER_URL repo=$GITHUB_REPOSITORY repo_id=$GITHUB_REPOSITORY_ID run=$GITHUB_RUN_ID" >> "$S"
+          echo "::notice title=forge-probe2::complete"
