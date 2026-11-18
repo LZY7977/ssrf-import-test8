@@ -1,0 +1,24 @@
+77524.5 [C-zerosig-own] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [C-zerosig-own] CLOSE 1008 authentication failed
+77524.5 [C-zerosig-own] end frames=1
+77524.5 [D-unsigned-otheruid] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [D-unsigned-otheruid] CLOSE 1008 authentication failed
+77524.5 [D-unsigned-otheruid] end frames=1
+77524.5 [A-valid-own-token] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [A-valid-own-token] CLOSE 1008 authentication failed
+77524.5 [A-valid-own-token] end frames=1
+77524.5 [E-unsigned-otherrepo] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [E-unsigned-otherrepo] CLOSE 1008 authentication failed
+77524.5 [E-unsigned-otherrepo] end frames=1
+77524.5 [B-unsigned-own-name] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [B-unsigned-own-name] CLOSE 1008 authentication failed
+77524.5 [B-unsigned-own-name] end frames=1
+77524.5 [F-unsigned-notif-other] handshake HTTP/1.1 101 Switching Protocols
+77524.5 [F-unsigned-notif-other] CLOSE 1008 authentication failed
+77524.5 [F-unsigned-notif-other] end frames=1
+77524.6 [G-valid-notif-own] handshake HTTP/1.1 101 Switching Protocols
+77524.6 [G-valid-notif-own] CLOSE 1008 authentication failed
+77524.6 [G-valid-notif-own] end frames=1
+77550.2 PUSH status 201
+77576.2 PUSH status 201
+77576.2 ALL DONE
