@@ -1,0 +1,22 @@
+66943.6 [B-unsigned-own-name] handshake HTTP/1.1 101 Switching Protocols
+66943.6 [D-unsigned-otheruid] handshake HTTP/1.1 101 Switching Protocols
+66943.6 [A-valid-own-token] handshake HTTP/1.1 101 Switching Protocols
+66943.6 [C-zerosig-own] handshake HTTP/1.1 101 Switching Protocols
+66943.6 [B-unsigned-own-name] MSG {"e":"ack","off":"1794966943607-0","health":true}
+66943.6 [D-unsigned-otheruid] MSG {"e":"ack","off":"1794966943609-0","health":true}
+66943.6 [A-valid-own-token] MSG {"e":"ack","off":"1794966943609-0","health":true}
+66943.6 [F-unsigned-notif-other] handshake HTTP/1.1 101 Switching Protocols
+66943.6 [C-zerosig-own] MSG {"e":"ack","off":"1794966943615-0","health":true}
+66943.7 [E-unsigned-otherrepo] handshake HTTP/1.1 101 Switching Protocols
+66943.7 [G-valid-notif-own] handshake HTTP/1.1 101 Switching Protocols
+66943.7 [F-unsigned-notif-other] MSG {"e":"ack","off":"1794966943686-0","health":true}
+66943.8 [E-unsigned-otherrepo] MSG {"e":"ack","off":"1794966943719-0","health":true}
+66943.8 [G-valid-notif-own] MSG {"e":"ack","off":"1794966943729-0","health":true}
+66948.6 [B-unsigned-own-name] end frames=1
+66948.6 [D-unsigned-otheruid] end frames=1
+66948.6 [A-valid-own-token] end frames=1
+66948.7 [C-zerosig-own] end frames=1
+66948.7 [F-unsigned-notif-other] end frames=1
+66948.8 [E-unsigned-otherrepo] end frames=1
+66948.8 [G-valid-notif-own] end frames=1
+66948.8 ALL DONE
