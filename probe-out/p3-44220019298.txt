@@ -1,0 +1,69 @@
+python 3.14.4
+
+## Part A - handshake matrix
+session payload: {"v": "V3", "u": 76449445, "s": 2428200566, "c": 3210361190, "t": 1794966721}
+- valid session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('timeout', 0, '')]
+- no session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- bad sig: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- url uid=1 + our session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- url uid=9919 + our session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- anon socket path: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- root: HTTP/1.1 404 Not Found
+    hdrs: HTTP/1.1 404 Not Found | Content-Security-Policy: default-src 'none'; form-action 'none'; frame-ancestors 'none'; sandbox | Content-Type: text/plain; charset=utf-8 | Referrer-Policy: no-referrer | Strict-Transport-Security: max-age=31536000 | X-Content-Type-Options: nosniff | X-Frame-Options: deny |
+- session payload u=1, orig sig: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+
+## Part B - subscribe wire-format discovery (valid own-repo token)
+- obj-str: [('close', 1007, 'failed to unmarshal JSON')]
+- obj-list: [('close', 1007, 'failed to unmarshal JSON')]
+- obj-map0: [('close', 1007, 'failed to unmarshal JSON')]
+- obj-mapnull: [('msg', 1, '{"e":"ack","off":"1794967228737-0","health":true}'), ('timeout', 0, '')]
+- list-dict: [('close', 1007, 'failed to unmarshal JSON')]
+- bare: [('close', 1007, 'failed to unmarshal JSON')]
+- cmd: [('close', 1007, 'failed to unmarshal JSON')]
+- sub-sp: [('close', 1007, 'failed to unmarshal JSON')]
+- garbage: [('close', 1007, 'failed to unmarshal JSON')]
+good formats: ['obj-mapnull']
+using format: obj-mapnull
+
+## Part C - channel scope / signature mutation matrix
+- [baseline own_repo valid] -> [('msg', 1, '{"e":"ack","off":"1794967233139-0","health":true}'), ('timeout', 0, '')]
+- [own_notif valid] -> [('msg', 1, '{"e":"ack","off":"1794967236272-0","health":true}'), ('timeout', 0, '')]
+- [own_check_suite valid] -> [('msg', 1, '{"e":"ack","off":"1794967239405-0","health":true}'), ('timeout', 0, '')]
+- [own_workflow_run valid] -> [('msg', 1, '{"e":"ack","off":"1794967242558-0","health":true}'), ('timeout', 0, '')]
+- [own_actions_results valid] -> [('msg', 1, '{"e":"ack","off":"1794967245777-0","health":true}'), ('timeout', 0, '')]
+- [FOREIGN check_suite valid-sig] -> [('msg', 1, '{"e":"ack","off":"1794967249030-0","health":true}'), ('timeout', 0, '')]
+- [FOREIGN workflow_run valid-sig] -> [('msg', 1, '{"e":"ack","off":"1794967252167-0","health":true}'), ('timeout', 0, '')]
+- [FOREIGN actions_results valid-sig] -> [('msg', 1, '{"e":"ack","off":"1794967255295-0","health":true}'), ('timeout', 0, '')]
+- [mut repo-id(other repo) same sig] -> [('msg', 1, '{"e":"ack","off":"1794967258459-0","health":true}'), ('timeout', 0, '')]
+- [mut repo-id=1 same sig] -> [('msg', 1, '{"e":"ack","off":"1794967261566-0","health":true}'), ('timeout', 0, '')]
+- [mut viewer-uid=9919 same sig] -> [('msg', 1, '{"e":"ack","off":"1794967264817-0","health":true}'), ('timeout', 0, '')]
+- [mut notif uid=9919 same sig] -> [('msg', 1, '{"e":"ack","off":"1794967268066-0","health":true}'), ('timeout', 0, '')]
+- [mut t+10d same sig] -> [('msg', 1, '{"e":"ack","off":"1794967271271-0","health":true}'), ('timeout', 0, '')]
+- [mut t=0 same sig] -> [('msg', 1, '{"e":"ack","off":"1794967274486-0","health":true}'), ('timeout', 0, '')]
+- [same payload, sig truncated 32] -> [('msg', 1, '{"e":"ack","off":"1794967277626-0","health":true}'), ('timeout', 0, '')]
+- [same payload, sig zeroed] -> [('msg', 1, '{"e":"ack","off":"1794967280885-0","health":true}'), ('timeout', 0, '')]
+- [same payload, sig empty] -> [('msg', 1, '{"e":"ack","off":"1794967284147-0","health":true}'), ('timeout', 0, '')]
+- [payload only, no sep] -> [('msg', 1, '{"e":"ack","off":"1794967287302-0","health":true}'), ('timeout', 0, '')]
+- [plain channel name own] -> [('msg', 1, '{"e":"ack","off":"1794967290436-0","health":true}'), ('timeout', 0, '')]
+- [plain channel name foreign notif] -> [('msg', 1, '{"e":"ack","off":"1794967293648-0","health":true}'), ('timeout', 0, '')]
+- [plain channel name foreign repo] -> [('msg', 1, '{"e":"ack","off":"1794967296879-0","health":true}'), ('timeout', 0, '')]
+- [plain check_suites foreign] -> [('msg', 1, '{"e":"ack","off":"1794967300190-0","health":true}'), ('timeout', 0, '')]
+- [cross-sig: repo payload + notif sig] -> [('msg', 1, '{"e":"ack","off":"1794967303410-0","health":true}'), ('timeout', 0, '')]
+- [session token as channel] -> [('msg', 1, '{"e":"ack","off":"1794967306516-0","health":true}'), ('timeout', 0, '')]
+- [channel name suffix x, same sig] -> [('msg', 1, '{"e":"ack","off":"1794967309691-0","health":true}'), ('timeout', 0, '')]
+- [extra json field, same sig] -> [('msg', 1, '{"e":"ack","off":"1794967312939-0","health":true}'), ('timeout', 0, '')]
+- [json payload unsigned (no b64)] -> [('msg', 1, '{"e":"ack","off":"1794967316038-0","health":true}'), ('timeout', 0, '')]
+
+## Part D - liveness: subscribe own repo post-receive, then push
+handshake: HTTP/1.1 101 Switching Protocols
+pre-push frames: [('msg', 1, '{"e":"ack","off":"1794967319177-0","health":true}'), ('msg', 1, '{"e":"ack","off":"1794967319205-0","health":true}'), ('timeout', 0, '')]
+push status: 201
+post-push frames: [('timeout', 0, '')]
+DONE
