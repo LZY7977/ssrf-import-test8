@@ -1,0 +1,19 @@
+python 3.14.4
+dns 140.82.114.26   live.github.com alive.github.com
+tcp443 open
+## Part 1 - asset bundle recon
+js fetch failed TimeoutError('The read operation timed out')
+
+## Part 2 - handshake matrix
+Traceback (most recent call last):
+  File "/tmp/p.py", line 119, in <module>
+    ("session u mutated",  f"/_sockets/u/{UID}/ws?session=" + mutpay(SESSION, lambda d: d.__setitem__("u",1))),
+                                                              ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/p.py", line 110, in mutpay
+    d=json.loads(base64.b64decode(p+"="*(-len(p)%4)))
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/base64.py", line 85, in b64decode
+    return binascii.a2b_base64(s, strict_mode=validate)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+binascii.Error: Incorrect padding
+SCRIPT EXIT 1
