@@ -1,0 +1,33 @@
+python 3.14.4
+dns 140.82.112.26   live.github.com alive.github.com
+tcp443 open
+## Part 1 - asset bundle recon
+js bytes 6145559
+### kw _sockets hits 0
+### kw subscribe hits 6
+   ... id 0,t)),r){let n=ys.get(t);n||(n={},ys.set(t,n)),n[`${e.id}`]=r}n.push(e.id)}}function ace(e,t){if(!(t instanceof e.elementConstructor))return;let n=_s.get(t);if(n||(n=[],_s.set(t,n)),n.indexOf(e.id)===-1){e.elements.push(t);let r=ys.get(t),i=r?r[`${e.id}`]:null;if(i&&i.add&&i.add.call(void 0,t),e.subscribe){let n=e.subscribe.call(void 0,t);if(n){let r=bs.get(t);r||(r={},bs.set(t,r)),r[`${e.id}`]=n}}e.add&&e.add.call(void 0,t),n.push(e.id)}}function oce(e,t){if(!(t instanceof e.elementConstructor))return;let n=_s.get(t);if(!n)return;let r=e.elements.indexOf(t);if(r!==-1&&e.elements.splice(r,1
+   ... s.get(t);n||(n={},ys.set(t,n)),n[`${e.id}`]=r}n.push(e.id)}}function ace(e,t){if(!(t instanceof e.elementConstructor))return;let n=_s.get(t);if(n||(n=[],_s.set(t,n)),n.indexOf(e.id)===-1){e.elements.push(t);let r=ys.get(t),i=r?r[`${e.id}`]:null;if(i&&i.add&&i.add.call(void 0,t),e.subscribe){let n=e.subscribe.call(void 0,t);if(n){let r=bs.get(t);r||(r={},bs.set(t,r)),r[`${e.id}`]=n}}e.add&&e.add.call(void 0,t),n.push(e.id)}}function oce(e,t){if(!(t instanceof e.elementConstructor))return;let n=_s.get(t);if(!n)return;let r=e.elements.indexOf(t);if(r!==-1&&e.elements.splice(r,1),r=n.indexOf(e.id)
+   ... d&&e.add.call(void 0,t),n.push(e.id)}}function oce(e,t){if(!(t instanceof e.elementConstructor))return;let n=_s.get(t);if(!n)return;let r=e.elements.indexOf(t);if(r!==-1&&e.elements.splice(r,1),r=n.indexOf(e.id),r!==-1){let i=ys.get(t),a=i?i[`${e.id}`]:null;if(a&&a.remove&&a.remove.call(void 0,t),e.subscribe){let n=bs.get(t),r=n?n[`${e.id}`]:null;r&&r.unsubscribe&&r.unsubscribe()}e.remove&&e.remove.call(void 0,t),n.splice(r,1)}n.length===0&&_s.delete(t)}function sce(e,t){let n=_s.get(t);if(!n)return;let r=n.slice(0);for(let n of r){let r=e[n];if(!r)continue;let i=r.elements.indexOf(t);i!==-1&&
+### kw data-channel hits 0
+### kw alive hits 6
+   ... this.clientId,page_views:e,events:t,request_context:lte(this.options.getReferrer)},r=JSON.stringify(n);try{if(navigator.sendBeacon){navigator.sendBeacon(this.collectorUrl,r);return}}catch{}fetch(this.collectorUrl,{method:`POST`,cache:`no-cache`,headers:{"Content-Type":`application/json`},body:r,keepalive:!1})}};function vte(e=`ha`){let t,n={},r=document.head.querySelectorAll(`meta[name^="${e}-"]`);for(let i of Array.from(r)){let{name:r,content:a}=i,o=r.replace(`${e}-`,``).replace(/-/g,`_`);o===`url`?t=a:n[o]=a}if(!t)throw Error(`AnalyticsClient ${e}-url meta tag not found`);return{collectorUrl
+   ... i.length-1,!0),c=Io(s),a+e+c>n&&(r.push(i),i=[],a=t,o=!0,c=Io(s))):o=!1,a+=+(i.length>0)+c,i.push(s)}return i.length>0&&r.push(i),r}var Fo=3,oae=new TextEncoder;function Io(e){return oae.encode(e).length}async function Lo(e,t,n){try{if(!(await fetch(e,{method:`POST`,body:t,credentials:`include`,keepalive:!1})).ok)throw Error(`Browser stats delivery failed`)}catch{n&&console.error(n)}}function Ro(){return!!La?.head?.querySelector(`meta[name="user-staff"]`)?.content}function sae(){return La?.head?.querySelector(`meta[name="ui-pass-through"]`)?.content===`true`}function cae(){return La?.head?.que
+   ... et n=Xoe(e);if(new TextEncoder().encode(n).byteLength>Voe){await ls(e);return}try{if(navigator.sendBeacon?.(as.collectorUrl,n))return}catch{}if(Uoe>=Hoe){await ls(e);return}Uoe++,t=!0,(await fetch(as.collectorUrl,{method:`POST`,cache:`no-cache`,headers:{"Content-Type":`application/json`},body:n,keepalive:!0})).ok||await ls(e)}catch{await ls(e)}finally{t&&Uoe--}}function us(){if(!os)return;let e=os;os=void 0,ss!==void 0&&clearTimeout(ss),ss=void 0,window.removeEventListener(`pagehide`,$oe),document.removeEventListener(`visibilitychange`,Qoe),document.removeEventListener(to.START,us),Zoe(e)}func
+### kw presence hits 6
+   ... turn t instanceof Uint8Array&&!t.byteLength;default:return t==0}}var Bve=2,Rl=Symbol.for(`reflect unsafe local`);function Vve(e,t){let n=e[t.localName].case;return n===void 0?n:t.fields.find(e=>e.localName===n)}function Hve(e,t){let n=t.localName;if(t.oneof)return e[t.oneof.localName].case===n;if(t.presence!=Bve)return e[n]!==void 0&&Object.prototype.hasOwnProperty.call(e,n);switch(t.fieldKind){case`list`:return e[n].length>0;case`map`:return Object.keys(e[n]).length>0;case`scalar`:return!zve(t.scalar,e[n]);case`enum`:return e[n]!==t.enum.values[0].number}throw Error(`message field with implic
+   ... sence!=Bve)return e[n]!==void 0&&Object.prototype.hasOwnProperty.call(e,n);switch(t.fieldKind){case`list`:return e[n].length>0;case`map`:return Object.keys(e[n]).length>0;case`scalar`:return!zve(t.scalar,e[n]);case`enum`:return e[n]!==t.enum.values[0].number}throw Error(`message field with implicit presence`)}function zl(e,t){return Object.prototype.hasOwnProperty.call(e,t)&&e[t]!==void 0}function Uve(e,t){if(t.oneof){let n=e[t.oneof.localName];return n.case===t.localName?n.value:void 0}return e[t.localName]}function Wve(e,t,n){t.oneof?e[t.oneof.localName]={case:t.localName,value:n}:e[t.localN
+   ...  n=e[t.oneof.localName];return n.case===t.localName?n.value:void 0}return e[t.localName]}function Wve(e,t,n){t.oneof?e[t.oneof.localName]={case:t.localName,value:n}:e[t.localName]=n}function Gve(e,t){let n=t.localName;if(t.oneof){let r=t.oneof.localName;e[r].case===n&&(e[r]={case:void 0})}else if(t.presence!=Bve)delete e[n];else switch(t.fieldKind){case`map`:e[n]={};break;case`list`:e[n]=[];break;case`enum`:e[n]=t.enum.values[0].number;break;case`scalar`:e[n]=Ll(t.scalar,t.longAsString)}}function Bl(e){return typeof e==`object`&&!!e&&!Array.isArray(e)}function Kve(e,t){if(Bl(e)&&Rl in e&&`add`
+
+## Part 2 - handshake matrix
+Traceback (most recent call last):
+  File "/tmp/p.py", line 119, in <module>
+    ("session u mutated",  f"/_sockets/u/{UID}/ws?session=" + mutpay(SESSION, lambda d: d.__setitem__("u",1))),
+                                                              ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/p.py", line 110, in mutpay
+    d=json.loads(base64.b64decode(p+"="*(-len(p)%4)))
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/base64.py", line 85, in b64decode
+    return binascii.a2b_base64(s, strict_mode=validate)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+binascii.Error: Incorrect padding
+SCRIPT EXIT 1
