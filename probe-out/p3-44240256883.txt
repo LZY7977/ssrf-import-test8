@@ -1,0 +1,69 @@
+python 3.14.4
+
+## Part A - handshake matrix
+session payload: {"v": "V3", "u": 76449445, "s": 2428200566, "c": 3210361190, "t": 1794966721}
+- valid session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- no session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- bad sig: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- url uid=1 + our session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- url uid=9919 + our session: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- anon socket path: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+- root: HTTP/1.1 404 Not Found
+    hdrs: HTTP/1.1 404 Not Found | Content-Security-Policy: default-src 'none'; form-action 'none'; frame-ancestors 'none'; sandbox | Content-Type: text/plain; charset=utf-8 | Referrer-Policy: no-referrer | Strict-Transport-Security: max-age=31536000 | X-Content-Type-Options: nosniff | X-Frame-Options: deny |
+- session payload u=1, orig sig: HTTP/1.1 101 Switching Protocols
+    pre-frames: [('close', 1008, 'authentication failed')]
+
+## Part B - subscribe wire-format discovery (valid own-repo token)
+- obj-str: [('close', 1008, 'authentication failed')]
+- obj-list: [('close', 1008, 'authentication failed')]
+- obj-map0: [('close', 1008, 'authentication failed')]
+- obj-mapnull: [('close', 1008, 'authentication failed')]
+- list-dict: [('close', 1008, 'authentication failed')]
+- bare: [('close', 1008, 'authentication failed')]
+- cmd: [('close', 1008, 'authentication failed')]
+- sub-sp: [('close', 1008, 'authentication failed')]
+- garbage: [('close', 1008, 'authentication failed')]
+good formats: []
+using format: obj-list
+
+## Part C - channel scope / signature mutation matrix
+- [baseline own_repo valid] -> [('close', 1008, 'authentication failed')]
+- [own_notif valid] -> [('close', 1008, 'authentication failed')]
+- [own_check_suite valid] -> [('close', 1008, 'authentication failed')]
+- [own_workflow_run valid] -> [('close', 1008, 'authentication failed')]
+- [own_actions_results valid] -> [('close', 1008, 'authentication failed')]
+- [FOREIGN check_suite valid-sig] -> [('close', 1008, 'authentication failed')]
+- [FOREIGN workflow_run valid-sig] -> [('close', 1008, 'authentication failed')]
+- [FOREIGN actions_results valid-sig] -> [('close', 1008, 'authentication failed')]
+- [mut repo-id(other repo) same sig] -> [('close', 1008, 'authentication failed')]
+- [mut repo-id=1 same sig] -> [('close', 1008, 'authentication failed')]
+- [mut viewer-uid=9919 same sig] -> [('close', 1008, 'authentication failed')]
+- [mut notif uid=9919 same sig] -> [('close', 1008, 'authentication failed')]
+- [mut t+10d same sig] -> [('close', 1008, 'authentication failed')]
+- [mut t=0 same sig] -> [('close', 1008, 'authentication failed')]
+- [same payload, sig truncated 32] -> [('close', 1008, 'authentication failed')]
+- [same payload, sig zeroed] -> [('close', 1008, 'authentication failed')]
+- [same payload, sig empty] -> [('close', 1008, 'authentication failed')]
+- [payload only, no sep] -> [('close', 1008, 'authentication failed')]
+- [plain channel name own] -> [('close', 1008, 'authentication failed')]
+- [plain channel name foreign notif] -> [('close', 1008, 'authentication failed')]
+- [plain channel name foreign repo] -> [('close', 1008, 'authentication failed')]
+- [plain check_suites foreign] -> [('close', 1008, 'authentication failed')]
+- [cross-sig: repo payload + notif sig] -> [('close', 1008, 'authentication failed')]
+- [session token as channel] -> [('close', 1008, 'authentication failed')]
+- [channel name suffix x, same sig] -> [('close', 1008, 'authentication failed')]
+- [extra json field, same sig] -> [('close', 1008, 'authentication failed')]
+- [json payload unsigned (no b64)] -> [('close', 1008, 'authentication failed')]
+
+## Part D - liveness: subscribe own repo post-receive, then push
+handshake: HTTP/1.1 101 Switching Protocols
+pre-push frames: [('close', 1008, 'authentication failed')]
+push status: 201
+post-push frames: [('timeout', 0, '')]
+DONE
