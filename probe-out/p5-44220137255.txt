@@ -1,0 +1,31 @@
+67274.7 [D-unsigned-otheruid] handshake HTTP/1.1 101 Switching Protocols
+67274.7 [C-zerosig-own] handshake HTTP/1.1 101 Switching Protocols
+67274.7 [D-unsigned-otheruid] MSG {"e":"ack","off":"1794967274714-0","health":true}
+67274.8 [G-valid-notif-own] handshake HTTP/1.1 101 Switching Protocols
+67274.8 [F-unsigned-notif-other] handshake HTTP/1.1 101 Switching Protocols
+67274.8 [C-zerosig-own] MSG {"e":"ack","off":"1794967274729-0","health":true}
+67274.8 [A-valid-own-token] handshake HTTP/1.1 101 Switching Protocols
+67274.8 [E-unsigned-otherrepo] handshake HTTP/1.1 101 Switching Protocols
+67274.8 [B-unsigned-own-name] handshake HTTP/1.1 101 Switching Protocols
+67274.8 [G-valid-notif-own] MSG {"e":"ack","off":"1794967274796-0","health":true}
+67274.8 [F-unsigned-notif-other] MSG {"e":"ack","off":"1794967274805-0","health":true}
+67274.9 [A-valid-own-token] MSG {"e":"ack","off":"1794967274827-0","health":true}
+67274.9 [E-unsigned-otherrepo] MSG {"e":"ack","off":"1794967274826-0","health":true}
+67274.9 [B-unsigned-own-name] MSG {"e":"ack","off":"1794967274848-0","health":true}
+67300.4 PUSH status 201
+67326.6 PUSH status 201
+67341.7 [D-unsigned-otheruid] readerr EOFError()
+67341.7 [D-unsigned-otheruid] end frames=2
+67341.7 [C-zerosig-own] readerr EOFError()
+67341.7 [C-zerosig-own] end frames=2
+67341.8 [G-valid-notif-own] readerr EOFError()
+67341.8 [G-valid-notif-own] end frames=2
+67341.8 [F-unsigned-notif-other] readerr EOFError()
+67341.8 [F-unsigned-notif-other] end frames=2
+67341.8 [A-valid-own-token] readerr EOFError()
+67341.8 [A-valid-own-token] end frames=2
+67341.8 [E-unsigned-otherrepo] readerr EOFError()
+67341.8 [E-unsigned-otherrepo] end frames=2
+67341.8 [B-unsigned-own-name] readerr EOFError()
+67341.8 [B-unsigned-own-name] end frames=2
+67341.8 ALL DONE
